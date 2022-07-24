@@ -23,9 +23,11 @@ public class App {
         List<Map<String,String>> listaDeFilmes = parser.parse(body);
     
         // exibir e manipular os dados da API
-        for (Map<String,String> map : listaDeFilmes) {
-            String imageUrl = map.get("image");
-            String title = map.get("title");
+        for (int i = 0; i < 10; i++) {
+            Map<String,String>filme = listaDeFilmes.get(i);
+
+            String imageUrl = filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
+            String title = filme.get("title");//
 
             InputStream inputStream = new URL(imageUrl).openStream(); 
             String fileName = title + ".png";  

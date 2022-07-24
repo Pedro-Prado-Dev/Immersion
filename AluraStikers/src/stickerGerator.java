@@ -27,12 +27,12 @@ public class stickerGerator {
         graphics.drawImage(originalImage, 0, 0, null);
 
         //configurar a fonte
-        var font = new Font(Font.SANS_SERIF,Font.CENTER_BASELINE,64);
+        var font = new Font(Font.SANS_SERIF,Font.CENTER_BASELINE,100);
         graphics.setColor(Color.CYAN);
         graphics.setFont(font);
 
         //escrever uma frase na nova imagem 
-        graphics.drawString("O 1° do mundo", 100, newheight - 100);
+        graphics.drawString("TOPZERA", 100, newheight - 100);
 
         // escrever a imagem nova em um arquivo 
         ImageIO.write(newImage, "png", new File("out/"+fileName));
