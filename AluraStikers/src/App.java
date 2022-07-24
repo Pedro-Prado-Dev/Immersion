@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -22,9 +24,19 @@ public class App {
     
         // exibir e manipular os dados da API
         for (Map<String,String> map : listaDeFilmes) {
-            System.out.println(map.get("title"));
-            System.out.println(map.get("image"));
-            System.out.println(map.get("imDbRating")+"\n");
+            String imageUrl = map.get("image");
+            String title = map.get("title");
+
+            InputStream inputStream = new URL(imageUrl).openStream(); 
+            String fileName = title + ".png";  
+
+            var gerator = new stickerGerator();
+            gerator.create(inputStream,  fileName);
+            
+            System.out.println(title+"\n");
+            //System.out.println(map.get("title"));
+            //System.out.println(map.get("image"));
+           // System.out.println(map.get("imDbRating")+"\n");
         }
     }
 }
