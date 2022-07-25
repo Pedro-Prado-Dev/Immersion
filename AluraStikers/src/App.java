@@ -1,41 +1,33 @@
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
-import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws Exception {
         // fazer o conexao(protocolo) HTTP e buscar o Top 250 filmes
         String url = "https://mocki.io/v1/9a7c1ca9-29b4-4eb3-8306-1adb9d159060";
-        URI endereco = URI.create(url);
-        HttpClient cliente =HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = cliente.send(request, BodyHandlers.ofString());
-        String body = response.body();
-        //System.out.println(body);
-        // extrair o dados interessantes(mtitulo, poster, classificação)
-        JsonParser parser = new JsonParser();
-        List<Map<String,String>> listaDeFilmes = parser.parse(body);
-    
+        var extractor = new  ImdbContentExtractor();
+
+        //String url = "https://api.nasa.gov/planetary/apod?api_key=hxekMw06RiONVbx9yecnqecMHa9UfQHpvaZdJaJK&start_date=2022-05-20&end_date=2022-05-24";
+        //var extractor = new  NasaContentExtractor();
+
+        var http = new httpClient();
+        String json = http.buscaDados(url);
+        
         // exibir e manipular os dados da API
-        for (int i = 0; i < 10; i++) {
-            Map<String,String>filme = listaDeFilmes.get(i);
+        List<Contents> content = extractor.extractContent(json);
 
-            String imageUrl = filme.get("image").replaceAll("(@+)(.*).jpg$", "$1.jpg");
-            String title = filme.get("title");//
+        for (int i = 0; i < 4 ; i++) {
+            
+            Contents contents = content.get(i);
 
-            InputStream inputStream = new URL(imageUrl).openStream(); 
-            String fileName = title + ".png";  
+            InputStream inputStream = new URL(contents.getUrlimage()).openStream(); 
+            String fileName = contents.getTitle() + ".png";  
 
             var gerator = new stickerGerator();
             gerator.create(inputStream,  fileName);
             
-            System.out.println(title+"\n");
+            System.out.println(contents.getTitle()+"\n");
             //System.out.println(map.get("title"));
             //System.out.println(map.get("image"));
            // System.out.println(map.get("imDbRating")+"\n");

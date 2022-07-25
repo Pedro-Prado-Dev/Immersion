@@ -32,7 +32,7 @@ public class stickerGerator {
         graphics.setFont(font);
 
         //escrever uma frase na nova imagem 
-        graphics.drawString("TOPZERA", 100, newheight - 100);
+        graphics.drawString("TOZERA", 100, newheight - 100);
 
         // escrever a imagem nova em um arquivo 
         ImageIO.write(newImage, "png", new File("out/"+fileName));
