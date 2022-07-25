@@ -1,2 +1,2 @@
-# Java immersion
-Atividade das aulas de imersão java da alura
+# Immersion
+Alura java immersion classes activity
